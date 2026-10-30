@@ -12,6 +12,7 @@ function pagina(cargar: () => Promise<{ default: ComponentType }>) {
   return { lazy: async () => ({ Component: (await cargar()).default }) }
 }
 
+// En GitHub Pages la app vive en /<repositorio>/; BASE_URL lo define Vite al compilar.
 export const router = createBrowserRouter([
   {
     element: <RootLayout />,
@@ -96,4 +97,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+], { basename: import.meta.env.BASE_URL })

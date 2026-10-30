@@ -22,6 +22,20 @@ pnpm build                # tipos de src y vite.config + compilación de producc
 pnpm preview              # sirve la compilación de dist/
 ```
 
+## Publicación en GitHub Pages
+
+El workflow `.github/workflows/deploy.yml` hace dos cosas:
+
+- **En cada pull request a `main`** corre lint, la revisión de tipos y la compilación.
+- **En cada push a `main`** (o al ejecutarlo a mano) corre lo mismo y publica `dist/` en GitHub Pages.
+
+Configuración única en el repositorio: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+El sitio queda en `https://<usuario>.github.io/<repositorio>/`. Detalles de la configuración:
+
+- La ruta base se fija al compilar con `VITE_BASE=/<repositorio>/`, y React Router la usa como `basename`.
+- Como Pages no reescribe rutas, el workflow copia `index.html` a `404.html`, para que las URLs internas carguen al abrirlas directamente o al recargar.
+
 ## Recorrido sugerido para la presentación
 
 En la pantalla de inicio de sesión usa los **accesos rápidos "Entrar como…"**. Dentro de la app, el selector **"Ver como"** cambia de rol sin salir.
