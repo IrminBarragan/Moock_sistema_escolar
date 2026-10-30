@@ -38,6 +38,22 @@ export const router = createBrowserRouter([
                 ],
               },
               {
+                path: 'padre',
+                element: <RolGuard rol="padre" />,
+                children: [
+                  {
+                    ...pagina(() => import('@/features/familia/pages/padre-layout')),
+                    children: [
+                      { index: true, ...pagina(() => import('@/features/familia/pages/padre-resumen-page')) },
+                      { path: 'calificaciones', ...pagina(() => import('@/features/familia/pages/padre-calificaciones-page')) },
+                      { path: 'tareas', ...pagina(() => import('@/features/familia/pages/padre-tareas-page')) },
+                      { path: 'tareas/:tareaId', ...pagina(() => import('@/features/familia/pages/padre-tarea-page')) },
+                      { path: 'estado-de-cuenta', ...pagina(() => import('@/features/familia/pages/padre-estado-cuenta-page')) },
+                    ],
+                  },
+                ],
+              },
+              {
                 path: 'docente',
                 element: <RolGuard rol="docente" />,
                 children: [
