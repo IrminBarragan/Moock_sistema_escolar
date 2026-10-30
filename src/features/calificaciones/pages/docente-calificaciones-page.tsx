@@ -195,7 +195,7 @@ function Planilla({ planilla, cargando, onPeriodo }: { planilla: PlanillaPeriodo
       )}
 
       <div className={cn('overflow-hidden rounded-xl border bg-card transition-opacity', cargando && 'opacity-60')}>
-        <div className="max-h-[calc(100dvh-16rem)] overflow-auto">
+        <div className="relative max-h-[calc(100dvh-16rem)] overflow-auto">
           <table className="w-full min-w-[46rem] border-separate border-spacing-0 text-sm">
             <caption className="sr-only">
               Calificaciones de {aula.grupo.nombre} en {aula.materia.nombre}, {periodo.nombre}

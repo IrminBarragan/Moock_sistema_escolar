@@ -1,78 +1,91 @@
-# React + TypeScript + Vite
+# Plataforma escolar — mock navegable
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Prototipo **solo de frontend** con datos ficticios para presentar a la dirección de la escuela una plataforma propia que reemplaza a Google Classroom y suma control escolar, portal para padres y confirmación de pagos.
 
-Currently, two official plugins are available:
+> No hay backend, autenticación real ni base de datos. Todo vive en el navegador.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Ejecutar
 
-## React Compiler
+Requisitos: Node 22 o superior y pnpm 10.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+pnpm install
+pnpm dev          # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Verificaciones:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+pnpm lint                 # ESLint sin errores ni advertencias
+pnpm exec tsc --noEmit    # tipos de src
+pnpm build                # tipos de src y vite.config + compilación de producción
+pnpm preview              # sirve la compilación de dist/
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Recorrido sugerido para la presentación
+
+En la pantalla de inicio de sesión usa los **accesos rápidos "Entrar como…"**. Dentro de la app, el selector **"Ver como"** cambia de rol sin salir.
+
+| Rol | Persona | Qué mostrar |
+|---|---|---|
+| Alumno | Valeria Domínguez · 2ºA secundaria | Inicio, una materia con material (video y vista previa de archivos), entregar y anular una tarea, calificaciones. Mejor en celular. |
+| Padre o tutor | Mariana Treviño · mamá de Valeria y Emilio | Selector de hijo, resumen, calificaciones, tareas entregadas y estado de cuenta (Emilio tiene enero vencido). |
+| Docente | Mtro. Andrés Villaseñor · Matemáticas y Física | Mis aulas, subir material, publicar aviso, crear tarea, revisar y calificar entregas, planilla del periodo. |
+| Control escolar | Lic. Patricia Navarro | Panel, alumnos y expediente, importación desde Excel, grupos, asignación de docentes, confirmación de pagos, reportes y exportación. |
+| Administrador del sistema | Ing. Jorge Medina | Ciclos, niveles, materias, periodos, periodicidad de cobro, usuarios y bitácora. |
+
+También se puede entrar con el correo de cualquier usuario ficticio (están en *Usuarios y permisos*) y cualquier contraseña.
+
+**Opciones de la demo** (menú de la cuenta, arriba a la derecha):
+
+- Tema claro u oscuro.
+- **Simular error de conexión**, para mostrar los estados de error.
+- **Reiniciar demo**, que regresa todo a los datos iniciales.
+
+Las acciones (entregar, calificar, confirmar pagos, publicar avisos, etc.) se guardan en `localStorage` y sobreviven a una recarga.
+
+## Adaptarlo a la escuela
+
+- **Marca:** `src/config/branding.ts` define el nombre, el lema, las iniciales, el logotipo y los colores.
+  - Para usar un logotipo, coloca el archivo en `public/` y pon su ruta en `logo`.
+  - Verifica que el color principal tenga contraste de al menos 4.5:1 sobre blanco.
+- **Fecha de la demo:** `src/config/demo.ts`. Está fija en el 20/01/2027 para que los vencimientos se vean igual en cualquier presentación.
+
+## Estructura
 
 ```
+src/
+  app/          rutas (carga diferida por pantalla), providers, guardias
+  config/       marca, parámetros de la demo, roles y menús
+  types/        tipos del dominio y de las respuestas de los servicios (vistas.ts)
+  mocks/        generadores deterministas de datos ficticios (ciclo 2026–2027)
+  services/     capa de datos simulada: promesas con retraso y errores tipo ProblemDetail
+  lib/          formatos es-MX (fechas dd/mm/aaaa, MXN, calificaciones 0–10), utilidades
+  hooks/        sesión, preferencias, debounce, media queries
+  components/   ui (shadcn/ui), layout, shared (estados, encabezados, archivos)
+  features/<módulo>/  aulas, tareas, calificaciones, familia, alumnos, grupos, pagos,
+                      panel, reportes, configuracion, usuarios, bitacora, auth, inicio
+```
+
+Diseño y decisiones visuales: [`DESIGN.md`](DESIGN.md).
+
+## Conectar la API real
+
+Las pantallas solo conocen los servicios de `src/services/*.service.ts` y los tipos de `src/types/vistas.ts`. Para conectar el backend:
+
+1. Reemplaza el cuerpo de cada función de servicio por una llamada HTTP que devuelva la misma forma.
+   - Las listas ya usan la paginación de Spring Data (`page`, `size`, `totalElements`).
+   - Los errores usan el formato ProblemDetail (`title`, `detail`, `status`).
+2. Elimina `src/mocks`, `services/db.ts` y `services/http.ts`.
+3. Sustituye la sesión simulada (`services/sesion.ts`) por la autenticación real: cookie httpOnly. El control de permisos real debe estar en el backend.
+
+## Notas técnicas
+
+- **TypeScript 7 y ESLint:** `typescript-eslint` aún no soporta la API de TS 7. El archivo `.pnpmfile.cjs` hace que las herramientas de lint usen la API de TypeScript 6 (`@typescript/typescript6`), mientras el proyecto compila con TS 7. Cuando `typescript-eslint` soporte TS 7, basta con borrar ese archivo y reinstalar.
+- `eslint-plugin-jsx-a11y` 6.10.2 (última versión) declara compatibilidad hasta ESLint 9; funciona con ESLint 10, pero pnpm muestra una advertencia de *peer dependency*.
+- **shadcn/ui:** los componentes de `src/components/ui` se escribieron siguiendo el código del CLI (estilo *new-york*), porque el registro no estaba accesible. `components.json` está listo para usar `pnpm dlx shadcn add` en el sistema real.
+- **Exportar a Excel** genera un CSV con BOM UTF-8, que Excel abre directamente. La importación desde Excel es simulada: el archivo no se lee y se muestran filas de ejemplo.
+
+## Fuera de alcance
+
+Este prototipo no incluye, ni siquiera simulados: sitio público, admisiones en línea, pago en línea, facturación CFDI, exámenes con temporizador, clases en vivo ni app móvil nativa.

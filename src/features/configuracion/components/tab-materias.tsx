@@ -44,7 +44,7 @@ export function TabMaterias({ config }: { config: Configuracion }) {
           </h2>
           <p className="text-sm text-muted-foreground">El color y el ícono identifican a la materia en toda la plataforma.</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Select value={gradoId} onValueChange={setGradoId}>
             <SelectTrigger className="w-52" aria-label="Grado">
               <SelectValue />

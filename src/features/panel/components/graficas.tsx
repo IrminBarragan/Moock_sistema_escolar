@@ -44,7 +44,7 @@ export function GraficaCobranza({ datos }: { datos: { nivel: string; pagados: nu
       />
       <div className="h-56" aria-hidden="true">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={datos} margin={{ top: 8, right: 8, bottom: 0, left: -16 }} barCategoryGap="28%">
+          <BarChart accessibilityLayer={false} data={datos} margin={{ top: 8, right: 8, bottom: 0, left: -16 }} barCategoryGap="28%">
             <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="0" />
             <XAxis dataKey="nivel" tick={eje} tickLine={false} axisLine={{ stroke: 'var(--border)' }} />
             <YAxis tick={eje} tickLine={false} axisLine={false} allowDecimals={false} />
@@ -83,7 +83,7 @@ export function GraficaSinEntregar({ datos }: { datos: { grupo: string; sinEntre
     <figure>
       <div style={{ height: datos.length * 34 + 16 }} aria-hidden="true">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={datos} layout="vertical" margin={{ top: 0, right: 40, bottom: 0, left: 8 }} barCategoryGap="30%">
+          <BarChart accessibilityLayer={false} data={datos} layout="vertical" margin={{ top: 0, right: 40, bottom: 0, left: 8 }} barCategoryGap="30%">
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="grupo" tick={eje} tickLine={false} axisLine={false} width={84} />
             <Tooltip content={<TooltipTarjeta />} cursor={{ fill: 'var(--muted)', opacity: 0.6 }} />

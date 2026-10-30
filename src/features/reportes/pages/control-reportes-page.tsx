@@ -138,7 +138,7 @@ function ReporteCalificaciones() {
       <Consulta consulta={consulta} esqueleto={<Skeleton className="h-[30rem] rounded-xl" />}>
         {(r) => (
           <div className="overflow-hidden rounded-xl border bg-card">
-            <div className="overflow-x-auto">
+            <div className="relative overflow-x-auto">
               <table className="w-full min-w-[48rem] text-sm">
                 <caption className="sr-only">Calificaciones de {r.periodo.nombre}</caption>
                 <thead className="bg-muted/40">
