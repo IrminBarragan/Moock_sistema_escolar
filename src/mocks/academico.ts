@@ -165,7 +165,7 @@ export function crearAcademico(r: Aleatorio, alumnos: Alumno[], docentes: Docent
       a.id,
       {
         aptitud: a.id === IDS_DEMO.alumno ? 9.2 : a.id === IDS_DEMO.hermano ? 8.6 : Math.min(9.8, Math.max(6, r.normal(8.1, 0.9))),
-        constancia: a.id === IDS_DEMO.alumno ? 0.97 : Math.min(1, Math.max(0.7, r.normal(0.92, 0.07))),
+        constancia: a.id === IDS_DEMO.alumno ? 0.97 : Math.min(1, Math.max(0.8, r.normal(0.95, 0.05))),
       },
     ]),
   )

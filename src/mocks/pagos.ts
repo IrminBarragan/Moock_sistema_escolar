@@ -51,7 +51,7 @@ export function crearPagos(r: Aleatorio, alumnos: Alumno[]): { cargos: Cargo[]; 
   for (const alumno of alumnos) {
     const nivel = nivelDe.get(alumno.grupoId)!
     const x = r.siguiente()
-    const perfil = x < 0.74 ? 'puntual' : x < 0.92 ? 'atrasado' : 'moroso'
+    const perfil = x < 0.84 ? 'puntual' : x < 0.95 ? 'atrasado' : 'moroso'
     const propios: Cargo[] = [
       { id: `car-${alumno.id}-insc`, alumnoId: alumno.id, conceptoId: insc.id, descripcion: 'Inscripción ciclo 2026–2027', monto: insc.montos[nivel], descuento: 0, fechaVencimiento: '2026-08-14', pagoId: null },
       { id: `car-${alumno.id}-mat`, alumnoId: alumno.id, conceptoId: materiales.id, descripcion: 'Cuota de materiales 2026–2027', monto: materiales.montos[nivel], descuento: 0, fechaVencimiento: '2026-09-10', pagoId: null },
@@ -73,7 +73,7 @@ export function crearPagos(r: Aleatorio, alumnos: Alumno[]): { cargos: Cargo[]; 
       const esDic = cargo.fechaVencimiento.startsWith('2026-12')
       const esNov = cargo.fechaVencimiento.startsWith('2026-11')
       let pagado = true
-      if (perfil === 'puntual' && esEnero) pagado = r.probabilidad(0.8)
+      if (perfil === 'puntual' && esEnero) pagado = r.probabilidad(0.9)
       if (perfil === 'atrasado' && esEnero) pagado = false
       if (perfil === 'atrasado' && esDic) pagado = r.probabilidad(0.5)
       if (perfil === 'moroso' && (esEnero || esDic || esNov)) pagado = false
