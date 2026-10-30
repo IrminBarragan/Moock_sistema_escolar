@@ -196,6 +196,10 @@
   table {
     font-variant-numeric: tabular-nums;
   }
+  /* Los elementos de una cuadrícula pueden encogerse: así el texto truncado no desborda en móvil. */
+  .grid > * {
+    min-width: 0;
+  }
   ::selection {
     background: color-mix(in srgb, var(--primary) 25%, transparent);
   }

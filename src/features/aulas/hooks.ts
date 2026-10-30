@@ -12,6 +12,7 @@ import {
   publicarAviso,
   subirMaterial,
 } from '@/services/aulas.service'
+import { listarAvisosAlumno } from '@/services/avisos.service'
 
 export function useAulasDocente(docenteId: string) {
   return useQuery({ queryKey: ['aulas', 'docente', docenteId], queryFn: () => listarAulasDocente(docenteId) })
@@ -45,4 +46,8 @@ export function useAccionesAula(aulaId: string) {
     subirMaterial: useMutation({ mutationFn: (d: Parameters<typeof subirMaterial>[1]) => subirMaterial(aulaId, d), onSuccess: alTerminar }),
     publicarAviso: useMutation({ mutationFn: (d: Parameters<typeof publicarAviso>[1]) => publicarAviso(aulaId, d), onSuccess: alTerminar }),
   }
+}
+
+export function useAvisosAlumno(alumnoId: string | undefined) {
+  return useQuery({ queryKey: ['avisos', 'alumno', alumnoId], queryFn: () => listarAvisosAlumno(alumnoId!), enabled: Boolean(alumnoId) })
 }

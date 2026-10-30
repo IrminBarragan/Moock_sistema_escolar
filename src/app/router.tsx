@@ -26,6 +26,18 @@ export const router = createBrowserRouter([
             element: <AppShell />,
             children: [
               {
+                path: 'alumno',
+                element: <RolGuard rol="alumno" />,
+                children: [
+                  { index: true, ...pagina(() => import('@/features/inicio/pages/alumno-inicio-page')) },
+                  { path: 'materias', ...pagina(() => import('@/features/aulas/pages/alumno-materias-page')) },
+                  { path: 'materias/:aulaId', ...pagina(() => import('@/features/aulas/pages/alumno-aula-page')) },
+                  { path: 'tareas', ...pagina(() => import('@/features/tareas/pages/alumno-tareas-page')) },
+                  { path: 'tareas/:tareaId', ...pagina(() => import('@/features/tareas/pages/alumno-tarea-page')) },
+                  { path: 'calificaciones', ...pagina(() => import('@/features/calificaciones/pages/alumno-calificaciones-page')) },
+                ],
+              },
+              {
                 path: 'docente',
                 element: <RolGuard rol="docente" />,
                 children: [
