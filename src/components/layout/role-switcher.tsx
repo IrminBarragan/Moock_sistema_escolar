@@ -32,7 +32,7 @@ export function RoleSwitcher({ className, compacto }: { className?: string; comp
           size="sm"
           aria-labelledby={compacto ? undefined : 'etiqueta-rol'}
           aria-label={compacto ? 'Cambiar de rol' : undefined}
-          className={cn('h-9 bg-card font-medium', compacto ? 'w-[9.5rem]' : 'w-[13rem]')}
+          className={cn('h-9 bg-card font-medium', compacto ? 'w-[9.5rem]' : 'w-[15rem]')}
         >
           <SelectValue />
         </SelectTrigger>

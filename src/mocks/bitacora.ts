@@ -25,6 +25,7 @@ export function crearBitacora(r: Aleatorio, f: Fuentes): EntradaBitacora[] {
   const cargo = new Map(f.cargos.map((c) => [c.id, c]))
   const docente = new Map(f.docentes.map((d) => [d.id, d]))
   const desde = '2027-01-07'
+  const hasta = '2027-01-20T09:00:00-06:00'
 
   for (const p of f.pagos.filter((p) => p.confirmadoEl >= desde)) {
     if (!r.probabilidad(0.35)) continue
@@ -58,7 +59,7 @@ export function crearBitacora(r: Aleatorio, f: Fuentes): EntradaBitacora[] {
     })
   }
 
-  for (const t of f.tareas.filter((t) => t.publicadaEl >= desde)) {
+  for (const t of f.tareas.filter((t) => t.publicadaEl >= desde && t.publicadaEl <= hasta)) {
     if (!r.probabilidad(0.25)) continue
     const au = aula.get(t.aulaId)!
     const d = docente.get(au.docenteId)!

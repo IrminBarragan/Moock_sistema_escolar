@@ -40,6 +40,8 @@ function restarDias(fecha: string, dias: number): string {
   return d.toISOString().slice(0, 10)
 }
 
+const minFecha = (a: string, b: string) => (a < b ? a : b)
+
 function slug(texto: string): string {
   return texto
     .normalize('NFD')
@@ -239,7 +241,8 @@ export function crearAcademico(r: Aleatorio, alumnos: Alumno[], docentes: Docent
             adjuntos,
             fechaLimite: H(fecha),
             puntos: r.elegir([10, 10, 20, 50, 100]),
-            publicadaEl: H(restarDias(fecha, r.entero(6, 10)), '08:00'),
+            // Nada se publica después del "hoy" de la demo.
+            publicadaEl: H(minFecha(restarDias(fecha, r.entero(6, 10)), '2027-01-19'), '08:00'),
             permiteEntregaTardia: r.probabilidad(0.7),
           }
           tareas.push(tarea)

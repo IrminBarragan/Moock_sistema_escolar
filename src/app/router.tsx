@@ -80,6 +80,15 @@ export const router = createBrowserRouter([
                   { path: 'reportes', ...pagina(() => import('@/features/reportes/pages/control-reportes-page')) },
                 ],
               },
+              {
+                path: 'sistema',
+                element: <RolGuard rol="sistema" />,
+                children: [
+                  { index: true, ...pagina(() => import('@/features/configuracion/pages/sistema-configuracion-page')) },
+                  { path: 'usuarios', ...pagina(() => import('@/features/usuarios/pages/sistema-usuarios-page')) },
+                  { path: 'bitacora', ...pagina(() => import('@/features/bitacora/pages/sistema-bitacora-page')) },
+                ],
+              },
               { path: '*', ...pagina(() => import('./not-found-page')) },
             ],
           },
