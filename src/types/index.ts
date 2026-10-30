@@ -1,0 +1,6 @@
+export * from './escolar'
+export * from './personas'
+export * from './academico'
+export * from './pagos'
+export * from './sistema'
+export * from './vistas'

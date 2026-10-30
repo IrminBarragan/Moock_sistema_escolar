@@ -1,7 +1,10 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  // La raíz revisa src con las mismas opciones que la app, para que
+  // `tsc --noEmit` sea una verificación real. El build revisa además
+  // vite.config.ts con tsconfig.node.json (ver el script "build").
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.root.tsbuildinfo"
+  },
+  "include": ["src"]
 }
